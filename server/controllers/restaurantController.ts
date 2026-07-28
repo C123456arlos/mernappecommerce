@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Restaturant } from "../models/Restaurant.js";
+import { Restaurant } from "../models/Restaurant.js";
 import jwt from 'jsonwebtoken'
 import { User } from "../models/User.js";
 import { Booking } from "../models/Booking.js";
@@ -56,7 +56,7 @@ export const getRestaurants = async (req: Request, res: Response): Promise<void>
         } else if (sort === 'price_high') {
             sortOption = { priceRange: -1 }
         }
-        const restaurant = await Restaturant.find(queryObj).sort(sortOption)
+        const restaurant = await Restaurant.find(queryObj).sort(sortOption)
         res.json(restaurant)
     } catch (error: any) {
         console.error(error)
@@ -65,7 +65,7 @@ export const getRestaurants = async (req: Request, res: Response): Promise<void>
 }
 export const getFeaturedRestaurants = async (req: Request, res: Response): Promise<void> => {
     try {
-        const featured = await Restaturant.find({
+        const featured = await Restaurant.find({
             status: 'approved',
             $or: [{ featured: true }, { exclusive: true }]
         }).limit(6)
@@ -77,7 +77,7 @@ export const getFeaturedRestaurants = async (req: Request, res: Response): Promi
 }
 export const getRestaurantBySlug = async (req: Request, res: Response): Promise<void> => {
     try {
-        const restaurant = await Restaturant.findOne({ slug: req.params.slug })
+        const restaurant = await Restaurant.findOne({ slug: req.params.slug })
         if (!restaurant) {
             res.status(404).json({ message: 'restaurant not found' })
             return
@@ -115,7 +115,7 @@ export const getRestaurantAvailability = async (req: Request, res: Response): Pr
             res.status(400).json({ message: 'please provide date' })
             return
         }
-        const restaurant = await Restaturant.findById(req.params.id)
+        const restaurant = await Restaurant.findById(req.params.id)
         if (!restaurant) {
             res.status(404).json({ message: 'restaurant not found' })
             return

@@ -1,6 +1,6 @@
 import { Response } from "express"
 import { AuthRequest } from "../middlewares/auth.js"
-import { Restaturant } from "../models/Restaurant.js"
+import { Restaurant } from "../models/Restaurant.js"
 import { Booking } from "../models/Booking.js"
 
 export const createBooking = async (req: AuthRequest, res: Response): Promise<void> => {
@@ -10,7 +10,7 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
             res.status(400).json({ message: 'please provide reservation details' })
             return
         }
-        const restaurant = await Restaturant.findById(restaurantId)
+        const restaurant = await Restaurant.findById(restaurantId)
         if (!restaurant) {
             res.status(404).json({ message: 'restaurant not found' })
             return
