@@ -106,4 +106,4 @@ const RestaurantSchema = new Schema<IRestaurant>({
     }
 }, { timestamps: true })
 
-export const Restaturant = model<IRestaurant>('Restarurant', RestaurantSchema)
+export const Restaurant = model<IRestaurant>('Restarurant', RestaurantSchema)
