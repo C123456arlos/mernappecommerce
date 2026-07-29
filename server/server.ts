@@ -23,7 +23,7 @@ const app = express()
 // // Use CORS middleware BEFORE your routes
 // app.use(cors(corsOptions))
 app.use(cors({
-    origin: 'https://mernappecommerce-dashboard-3hh2bvrlo-carlos-projects-b4082f29.vercel.app',
+    origin: ['https://mernappecommerce-dashboard-3hh2bvrlo-carlos-projects-b4082f29.vercel.app', 'http://localhost:5000/api'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
