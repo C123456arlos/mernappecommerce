@@ -141,13 +141,13 @@ app.use((req, res, next) => {
 
 
 
+const corsOptions = {
+    origin: 'https://mernappecommerce-dashboard-2ulnvmp5d-carlos-projects-b4082f29.vercel.app',
+    optionsSuccessStatus: 200
+};
 
-app.use(cors({
-    origin: 'https://mernappecommerce-dashboard-git-9efd06-carlos-projects-b4082f29.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true
-}));
-
+// Apply CORS middleware before your API routes
+app.use(cors(corsOptions));
 
 
 app.use('/api/auth', authRouter)
