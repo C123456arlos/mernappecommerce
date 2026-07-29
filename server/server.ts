@@ -16,13 +16,12 @@ app.get('/', (req: Request, res: Response) => {
     res.send('server running')
 })
 
+app.use(cors({
+    origin: ['http://localhost:3000', 'https://mernappecommerce-dashboard-app-eight.vercel.app/', 'http://localhost:5173'],
 
-const corsOptions = {
-    origin: '*',
-    credentials: true,
-    optionSuccessStatus: 200,
-}
-app.use(cors(corsOptions))
+    // origin: ENV.CLIENT_URL,
+    credentials: true
+}))
 
 app.use('/api/auth', authRouter)
 app.use('/api/restaurants', restaurantRouter)
