@@ -8,38 +8,27 @@ import bookingRouter from './routes/bookingRoutes.js'
 import ownerRouter from './routes/ownerRoutes.js'
 import adminRouter from './routes/adminRoutes.js'
 const app = express()
-// app.use(cors({
-//     origin: ['https://mernappecommerce-dashboard-3hh2bvrlo-carlos-projects-b4082f29.vercel.app', 'http://localhost:5000/api'],
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//     credentials: true
-// }));
+const allowedOrigins = [
+    'https://mernappecommerce-dashboard-app-eight.vercel.app/', // Your production Vercel URL
+    'http://localhost:3000',
+    'http://localhost:5173',
+    'http://localhost:5000/api',
+    'http://localhost:5000',
 
+];
 
-
-app.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader("Access-Control-Allow-Origin", "*");
-
-    // Request methods you wish to allow
-    res.setHeader(
-        "Access-Control-Allow-Methods",
-        "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-    );
-
-    // Request headers you wish to allow
-    res.setHeader(
-        "Access-Control-Allow-Headers",
-        "X-Requested-With,content-type"
-    );
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    // @ts-ignore
-    res.setHeader("Access-Control-Allow-Credentials", true);
-
-    // Pass to next layer of middleware
-    next();
-});
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true // Set to true if you are using cookies/sessions
+}));
 
 
 app.use('/api/auth', authRouter)
