@@ -16,12 +16,17 @@ app.get('/', (req: Request, res: Response) => {
     res.send('server running')
 })
 
-app.use(cors({
-    origin: ['http://localhost:3000', 'https://mernappecommerce-dashboard-app-eight.vercel.app/', 'http://localhost:5173'],
 
-    // origin: ENV.CLIENT_URL,
-    credentials: true
-}))
+
+
+app.use(
+    cors({
+        origin: ["mernappecommerce-dashboard-ic1rvhtpu-carlos-projects-b4082f29.vercel.app", "mernappecommerce-dashboard-app-eight.vercel.app",
+            "http://localhost:5173"
+        ],
+        credentials: false,
+    })
+);
 
 app.use('/api/auth', authRouter)
 app.use('/api/restaurants', restaurantRouter)
