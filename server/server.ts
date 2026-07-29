@@ -27,7 +27,7 @@ app.use(cors({
         }
         return callback(null, true);
     },
-    credentials: true // Set to true if you are using cookies/sessions
+    credentials: false // Set to true if you are using cookies/sessions
 }));
 
 
