@@ -59,10 +59,13 @@ const BookingSchema = new Schema<IBooking>({
     }
 }, {
     timestamps: true,
+    // @ts-ignore
     strictPopulate: false
 })
 BookingSchema.pre('save', function () {
+    // @ts-ignore
     if (!this.bookingId) {
+        // @ts-ignore
         this.bookingId = `GR-${crypto.randomBytes(4).toString('hex').toUpperCase()}`
     }
 })
