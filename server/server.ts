@@ -8,7 +8,26 @@ import bookingRouter from './routes/bookingRoutes.js'
 import ownerRouter from './routes/ownerRoutes.js'
 import adminRouter from './routes/adminRoutes.js'
 const app = express()
-app.use(cors());
+
+
+
+
+
+const corsOptions = {
+    origin: 'https://mernappecommerce-dashboard-git-9efd06-carlos-projects-b4082f29.vercel.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Allow cookies if needed
+    optionsSuccessStatus: 204
+};
+
+// Use CORS middleware BEFORE your routes
+app.use(cors(corsOptions))
+
+
+
+
+
+
 await connectDB()
 app.use(express.json())
 const port = process.env.PORT || 5000
