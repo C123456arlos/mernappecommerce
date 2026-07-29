@@ -282,4 +282,3 @@ export default function RestaurantWizard({ setRestaurant }: RestaurantWizardProp
     );
 }
 
-// 4:49
