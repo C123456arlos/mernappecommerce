@@ -45,13 +45,13 @@ app.get('/', (req: Request, res: Response) => {
 
 
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.error('unhandle error', err)
-    res.status(500).json({
-        message: err.message || 'internal server error',
-        stack: process.env.NODE_ENV === 'production' ? undefined : err.stack
-    })
-})
+// app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+//     console.error('unhandle error', err)
+//     res.status(500).json({
+//         message: err.message || 'internal server error',
+//         stack: process.env.NODE_ENV === 'production' ? undefined : err.stack
+//     })
+// })
 app.listen(port, () => {
     console.log(`server running ${port}`)
 })
