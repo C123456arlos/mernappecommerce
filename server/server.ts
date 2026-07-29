@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import express, { NextFunction, Request, Response } from 'express'
-import cors from 'cors'
+// import cors from 'cors'
 import connectDB from './config/db.js'
 import authRouter from './routes/authRoutes.js'
 import restaurantRouter from './routes/restaurantRoutes.js'
@@ -10,9 +10,24 @@ import adminRouter from './routes/adminRoutes.js'
 const app = express()
 
 
-app.use(cors())
+// app.use(cors())
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', [
+        'https://mernappecommerce-dashboard-app-eight.vercel.app/', // Your production Vercel URL
+        'http://localhost:3000',
+        'http://localhost:5173',
+        'http://localhost:5000/api',
+        'http://localhost:5000',
+    ]);
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200); // Intercept and reply to preflight
+    }
+    next();
+});
 
 
 
@@ -22,13 +37,13 @@ app.use(cors())
 
 // const corsOptions = {
 //     origin: function (origin: any, callback: any) {
-//         const allowedOrigins = [
-//             'https://mernappecommerce-dashboard-app-eight.vercel.app/', // Your production Vercel URL
-//             'http://localhost:3000',
-//             'http://localhost:5173',
-//             'http://localhost:5000/api',
-//             'http://localhost:5000',
-//         ];
+// const allowedOrigins = [
+//     'https://mernappecommerce-dashboard-app-eight.vercel.app/', // Your production Vercel URL
+//     'http://localhost:3000',
+//     'http://localhost:5173',
+//     'http://localhost:5000/api',
+//     'http://localhost:5000',
+// ];
 
 //         // Allow server-to-server requests (no origin header)
 //         if (!origin) return callback(null, true);
