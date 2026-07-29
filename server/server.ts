@@ -10,12 +10,20 @@ import adminRouter from './routes/adminRoutes.js'
 const app = express()
 
 await connectDB()
-app.use(cors())
 app.use(express.json())
 const port = process.env.PORT || 5000
 app.get('/', (req: Request, res: Response) => {
     res.send('server running')
 })
+
+
+const corsOptions = {
+    origin: '*',
+    credentials: true,
+    optionSuccessStatus: 200,
+}
+app.use(cors(corsOptions))
+
 app.use('/api/auth', authRouter)
 app.use('/api/restaurants', restaurantRouter)
 app.use('/api/bookings', bookingRouter)
