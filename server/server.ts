@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import express, { NextFunction, Request, Response } from 'express'
-// import cors from 'cors'
+import cors from 'cors'
 import connectDB from './config/db.js'
 import authRouter from './routes/authRoutes.js'
 import restaurantRouter from './routes/restaurantRoutes.js'
@@ -10,7 +10,7 @@ import adminRouter from './routes/adminRoutes.js'
 const app = express()
 
 
-// app.use(cors())
+app.use(cors())
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', [
@@ -28,7 +28,7 @@ app.use((req, res, next) => {
     }
     next();
 });
-
+app.options('*', cors());
 
 
 
