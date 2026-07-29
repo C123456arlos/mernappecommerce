@@ -8,27 +8,71 @@ import bookingRouter from './routes/bookingRoutes.js'
 import ownerRouter from './routes/ownerRoutes.js'
 import adminRouter from './routes/adminRoutes.js'
 const app = express()
-const allowedOrigins = [
-    'https://mernappecommerce-dashboard-app-eight.vercel.app/', // Your production Vercel URL
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'http://localhost:5000/api',
-    'http://localhost:5000',
 
-];
 
-app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
+
+
+
+
+
+
+
+
+
+
+const corsOptions = {
+    origin: function (origin: any, callback: any) {
+        const allowedOrigins = [
+            'https://mernappecommerce-dashboard-app-eight.vercel.app/', // Your production Vercel URL
+            'http://localhost:3000',
+            'http://localhost:5173',
+            'http://localhost:5000/api',
+            'http://localhost:5000',
+        ];
+
+        // Allow server-to-server requests (no origin header)
         if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-            return callback(new Error(msg), false);
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
         }
-        return callback(null, true);
     },
-    credentials: false // Set to true if you are using cookies/sessions
-}));
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    maxAge: 86400
+};
+
+app.use(cors(corsOptions));
+
+// Explicitly handle preflight for all routes
+app.options('*', cors(corsOptions));
+
+
+
+// const allowedOrigins = [
+// 'https://mernappecommerce-dashboard-app-eight.vercel.app/', // Your production Vercel URL
+// 'http://localhost:3000',
+// 'http://localhost:5173',
+// 'http://localhost:5000/api',
+// 'http://localhost:5000',
+
+// ];
+
+// app.use(cors({
+//     origin: function (origin, callback) {
+//         // Allow requests with no origin (like mobile apps or curl requests)
+//         if (!origin) return callback(null, true);
+//         if (allowedOrigins.indexOf(origin) === -1) {
+//             const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+//             return callback(new Error(msg), false);
+//         }
+//         return callback(null, true);
+//     },
+//     credentials: false // Set to true if you are using cookies/sessions
+// }));
 
 
 app.use('/api/auth', authRouter)
