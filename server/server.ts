@@ -109,6 +109,7 @@ app.use((req, res, next) => {
 
 const allowedOrigins = [
     'https://mernappecommerce-dashboard-ae4v3yhrx-carlos-projects-b4082f29.vercel.app',
+    'https://mernappecommerce-dashboard-git-9efd06-carlos-projects-b4082f29.vercel.app',
     'http://localhost:3000' // Include for local development
 ];
 
