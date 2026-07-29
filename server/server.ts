@@ -13,16 +13,20 @@ const app = express()
 
 
 
-const corsOptions = {
-    origin: 'https://mernappecommerce-dashboard-git-9efd06-carlos-projects-b4082f29.vercel.app',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Allow cookies if needed
-    optionsSuccessStatus: 204
-};
+// const corsOptions = {
+//     origin: 'https://mernappecommerce-dashboard-git-9efd06-carlos-projects-b4082f29.vercel.app',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true, // Allow cookies if needed
+//     optionsSuccessStatus: 204
+// };
 
-// Use CORS middleware BEFORE your routes
-app.use(cors(corsOptions))
-
+// // Use CORS middleware BEFORE your routes
+// app.use(cors(corsOptions))
+app.use(cors({
+    origin: 'https://mernappecommerce-dashboard-3hh2bvrlo-carlos-projects-b4082f29.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 
 
 
