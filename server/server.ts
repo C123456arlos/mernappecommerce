@@ -29,7 +29,11 @@ app.use(cors({
 }));
 
 
-
+app.use('/api/auth', authRouter)
+app.use('/api/restaurants', restaurantRouter)
+app.use('/api/bookings', bookingRouter)
+app.use('/api/owner', ownerRouter)
+app.use('/api/admin', adminRouter)
 
 
 await connectDB()
@@ -39,11 +43,7 @@ app.get('/', (req: Request, res: Response) => {
     res.send('server running')
 })
 
-app.use('/api/auth', authRouter)
-app.use('/api/restaurants', restaurantRouter)
-app.use('/api/bookings', bookingRouter)
-app.use('/api/owner', ownerRouter)
-app.use('/api/admin', adminRouter)
+
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error('unhandle error', err)
