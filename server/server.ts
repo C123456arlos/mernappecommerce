@@ -10,6 +10,7 @@ import adminRouter from './routes/adminRoutes.js'
 const app = express()
 
 
+app.use(cors())
 
 
 
@@ -19,36 +20,35 @@ const app = express()
 
 
 
+// const corsOptions = {
+//     origin: function (origin: any, callback: any) {
+//         const allowedOrigins = [
+//             'https://mernappecommerce-dashboard-app-eight.vercel.app/', // Your production Vercel URL
+//             'http://localhost:3000',
+//             'http://localhost:5173',
+//             'http://localhost:5000/api',
+//             'http://localhost:5000',
+//         ];
 
-const corsOptions = {
-    origin: function (origin: any, callback: any) {
-        const allowedOrigins = [
-            'https://mernappecommerce-dashboard-app-eight.vercel.app/', // Your production Vercel URL
-            'http://localhost:3000',
-            'http://localhost:5173',
-            'http://localhost:5000/api',
-            'http://localhost:5000',
-        ];
+//         // Allow server-to-server requests (no origin header)
+//         if (!origin) return callback(null, true);
 
-        // Allow server-to-server requests (no origin header)
-        if (!origin) return callback(null, true);
+//         if (allowedOrigins.includes(origin)) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     },
+//     credentials: true,
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     maxAge: 86400
+// };
 
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    maxAge: 86400
-};
+// app.use(cors(corsOptions));
 
-app.use(cors(corsOptions));
-
-// Explicitly handle preflight for all routes
-app.options('*', cors(corsOptions));
+// // Explicitly handle preflight for all routes
+// app.options('*', cors(corsOptions));
 
 
 
