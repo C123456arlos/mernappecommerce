@@ -1,6 +1,6 @@
 import { Response } from "express"
 import { AuthRequest } from "../middlewares/auth.js"
-import { Restaurant } from "../models/Restaurant.js"
+import { Restaurant222 } from "../models/Restaurant.js"
 import { Booking } from "../models/Booking.js"
 
 export const createBooking = async (req: AuthRequest, res: Response): Promise<void> => {
@@ -10,7 +10,7 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
             res.status(400).json({ message: 'please provide reservation details' })
             return
         }
-        const restaurant = await Restaurant.findById(restaurantId)
+        const restaurant = await Restaurant222.findById(restaurantId)
         if (!restaurant) {
             res.status(404).json({ message: 'restaurant not found' })
             return
@@ -42,9 +42,10 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
             guests: Number(guests),
             occasion,
             specialRequests,
-            status: 'confirmed'
+            status: 'confirmed',
         })
-        const populatedBooking = await booking.populate('restaurant', 'name location image address')
+        // const populatedBooking = await booking.populate('name location image address')
+        const populatedBooking = await booking.populate(['restaurant', 'name location image address'])
         res.status(201).json(populatedBooking)
 
     } catch (error: any) {
@@ -55,6 +56,7 @@ export const createBooking = async (req: AuthRequest, res: Response): Promise<vo
 export const getMyBookings = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
         const bookings = await Booking.find({ user: req.user?._id }).populate('restaurant', 'name location image adddress slug').sort({ date: -1, time: -1 })
+        // const bookings = await Booking.find({ user: req.user?._id }).populate('restaurant', 'name location image adddress slug').sort({ date: -1, time: -1 })
         res.json(bookings)
     } catch (error: any) {
         console.error(error)

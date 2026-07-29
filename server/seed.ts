@@ -2,7 +2,7 @@ import 'dotenv/config'
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 import { User } from './models/User.js'
-import { Restaurant } from './models/Restaurant.js'
+import { Restaurant222 } from './models/Restaurant.js'
 import { Booking } from './models/Booking.js'
 const MONGO_URI = process.env.MONGODB_URI || ''
 
@@ -13,7 +13,7 @@ const seedData = async () => {
         await mongoose.connect(MONGO_URI)
         console.log('database connected clearing collections')
         await User.deleteMany({})
-        await Restaurant.deleteMany({})
+        await Restaurant222.deleteMany({})
         await Booking.deleteMany({})
         console.log('creating default users')
         const salt = await bcrypt.genSalt(10)
@@ -165,7 +165,7 @@ const seedData = async () => {
                 totalSeats: 20 + idx * 5
             }
         })
-        await Restaurant.insertMany(updatedRestaurantsData)
+        await Restaurant222.insertMany(updatedRestaurantsData)
         console.log('seeding complete disconnecting')
         await mongoose.disconnect()
         console.log('disconnected from database')

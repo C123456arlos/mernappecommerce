@@ -1,9 +1,9 @@
 import { Document, model, Schema, Types } from 'mongoose'
 export interface IRestaurant extends Document {
     name: string;
+    slug: string;
     email: string;
     description?: string;
-    slug: string;
     cuisine: string;
     priceRange: '$' | '$$' | '$$$' | '$$$$';
     rating: number;
@@ -104,6 +104,9 @@ const RestaurantSchema = new Schema<IRestaurant>({
         type: Number,
         default: 20
     }
-}, { timestamps: true })
+}, {
+    timestamps: true,
+    // strictPopulate: false
+})
 
-export const Restaurant = model<IRestaurant>('Restarurant', RestaurantSchema)
+export const Restaurant222 = model<IRestaurant>('Restaurant222', RestaurantSchema)

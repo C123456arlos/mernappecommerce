@@ -12,7 +12,7 @@ export interface IBooking extends Document {
     status: 'confirmed' | 'cancelled' | 'completed';
     bookingId: string;
     createdAt: Date;
-    updateedAt: Date;
+    updatedAt: Date;
 
 
 }
@@ -24,7 +24,7 @@ const BookingSchema = new Schema<IBooking>({
     },
     restaurant: {
         type: Schema.Types.ObjectId,
-        ref: 'Restaurant',
+        ref: 'Restaurant222',
         required: true
     },
     date: {
@@ -57,7 +57,10 @@ const BookingSchema = new Schema<IBooking>({
         type: String,
         unique: true
     }
-}, { timestamps: true })
+}, {
+    timestamps: true,
+    strictPopulate: false
+})
 BookingSchema.pre('save', function () {
     if (!this.bookingId) {
         this.bookingId = `GR-${crypto.randomBytes(4).toString('hex').toUpperCase()}`

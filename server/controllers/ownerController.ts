@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { AuthRequest } from "../middlewares/auth.js";
-import { Restaurant } from "../models/Restaurant.js";
+import { Restaurant222 } from "../models/Restaurant.js";
 import { v2 as cloudinary } from 'cloudinary'
 import { Booking } from "../models/Booking.js";
 
@@ -17,7 +17,7 @@ const uploadToCloudinary = (fileBuffer: Buffer): Promise<{ secure_url: string }>
 
 export const getOwnerRestaurant = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
-        const restaurant = await Restaurant.findOne({ owner: req.user?._id })
+        const restaurant = await Restaurant222.findOne({ owner: req.user?._id })
         if (!restaurant) {
             res.status(200).json(null)
             return
@@ -30,7 +30,7 @@ export const getOwnerRestaurant = async (req: AuthRequest, res: Response): Promi
 }
 export const createOwnerRestaurant = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
-        const existing = await Restaurant.findOne({ owner: req.user?._id })
+        const existing = await Restaurant222.findOne({ owner: req.user?._id })
         if (existing) {
             res.status(400).json({ message: 'you already registered a restaurant' })
             return
@@ -41,7 +41,7 @@ export const createOwnerRestaurant = async (req: AuthRequest, res: Response): Pr
             return
         }
         const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '')
-        const slugExists = await Restaurant.findOne({ slug })
+        const slugExists = await Restaurant222.findOne({ slug })
         if (slugExists) {
             res.status(400).json({ message: 'restaurant with this name exists' })
             return
@@ -54,7 +54,7 @@ export const createOwnerRestaurant = async (req: AuthRequest, res: Response): Pr
         }
         const parsedTags = typeof tags === 'string' ? tags.split(',').map((t) => t.trim()) : tags || []
         const parsedSlots = typeof availableSlots === 'string' ? availableSlots.split(',').map((s) => s.trim()) : availableSlots || ['17:00', '18:00', '19:00', '20:00', '21:00']
-        const restaurant = await Restaurant.create({
+        const restaurant = await Restaurant222.create({
             name, slug, description, cuisine, priceRange, location, address, chef, image: imageUrl, tags: parsedTags, availableSlots: parsedSlots,
             totalSeats: totalSeats ? Number(totalSeats) : 20,
             owner: req.user?._id,
@@ -68,7 +68,7 @@ export const createOwnerRestaurant = async (req: AuthRequest, res: Response): Pr
 }
 export const updateOwnerRestaurant = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
-        const restaurant = await Restaurant.findOne({ owner: req.user?._id })
+        const restaurant = await Restaurant222.findOne({ owner: req.user?._id })
         if (!restaurant) {
             res.status(404).json({ message: 'restaurant not found' })
             return
@@ -88,7 +88,7 @@ export const updateOwnerRestaurant = async (req: AuthRequest, res: Response): Pr
         }
 
         if (availableSlots) {
-            restaurant.availableSlots = typeof availableSlots === 'string' ? availableSlots.split(',').map((s) => s.trim) : availableSlots
+            restaurant.availableSlots = typeof availableSlots === 'string' ? availableSlots.split(',').map((s) => s.trim()) : availableSlots
         }
         if (req.file) {
             const result = await uploadToCloudinary(req.file.buffer)
@@ -103,7 +103,7 @@ export const updateOwnerRestaurant = async (req: AuthRequest, res: Response): Pr
 }
 export const getOwnerBookings = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
-        const restaurant = await Restaurant.findOne({ owner: req.user?._id })
+        const restaurant = await Restaurant222.findOne({ owner: req.user?._id })
         if (!restaurant) {
             res.status(404).json({ message: 'restaurant profile not found' })
             return
@@ -127,7 +127,7 @@ export const updateBookingStatus = async (req: AuthRequest, res: Response): Prom
             res.status(404).json({ message: 'booking not found' })
             return
         }
-        const restaurant = await Restaurant.findById(booking.restaurant)
+        const restaurant = await Restaurant222.findById(booking.restaurant)
         if (!restaurant || restaurant.owner.toString() !== req.user?._id.toString()) {
             res.status(401).json({ message: 'not authorized to manage this booking' })
             return

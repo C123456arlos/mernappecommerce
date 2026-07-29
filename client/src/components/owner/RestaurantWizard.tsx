@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Utensils, Upload, Image } from "lucide-react";
 import toast from "react-hot-toast";
-import { dummyRestaurant } from "../../assets/assets.ts";
+import api from "../../lib/api.ts";
 
 interface RestaurantWizardProps {
     setRestaurant: (restaurant: any) => void;
@@ -84,8 +84,12 @@ export default function RestaurantWizard({ setRestaurant }: RestaurantWizardProp
             if (imageFile) {
                 formData.append("image", imageFile);
             }
-
-            setRestaurant(dummyRestaurant[0]);
+            const res = await api.post('/owner/restaurant', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+            setRestaurant(res.data)
             toast.success("Restaurant profile submitted successfully! Awaiting Admin approval.");
         } catch (error: any) {
             toast.error(error?.response?.data?.message || "Failed to register restaurant");
@@ -93,7 +97,7 @@ export default function RestaurantWizard({ setRestaurant }: RestaurantWizardProp
             setFormLoading(false);
         }
     };
-
+    console.log(availableSlots)
     return (
         <div className="max-w-2xl mx-auto bg-white border border-outline-variant/20 p-8 md:p-10 shadow-sm rounded-md space-y-6">
             <div className="text-center space-y-2 pb-6 border-b border-outline-variant/10">
@@ -246,6 +250,7 @@ export default function RestaurantWizard({ setRestaurant }: RestaurantWizardProp
                 <div className="space-y-2">
                     <span className="block text-[10px] font-medium text-black/55 tracking-wider uppercase">Available Slots</span>
                     <div className="flex flex-wrap gap-2">
+                        {/* {availableSlots.map((slot) => { */}
                         {defaultSlots.map((slot) => {
                             const isSelected = availableSlots.includes(slot);
                             return (
@@ -253,11 +258,10 @@ export default function RestaurantWizard({ setRestaurant }: RestaurantWizardProp
                                     key={slot}
                                     type="button"
                                     onClick={() => toggleSlot(slot)}
-                                    className={`py-1.5 px-3 text-[10px] border transition-colors cursor-pointer rounded-sm ${
-                                        isSelected
-                                            ? "bg-primary border-primary text-white"
-                                            : "border-outline-variant/40 text-black/55 hover:border-primary"
-                                    }`}
+                                    className={`py-1.5 px-3 text-[10px] border transition-colors cursor-pointer rounded-sm ${isSelected
+                                        ? "bg-primary border-primary text-white"
+                                        : "border-outline-variant/40 text-black/55 hover:border-primary"
+                                        }`}
                                 >
                                     {slot}
                                 </button>
@@ -277,3 +281,5 @@ export default function RestaurantWizard({ setRestaurant }: RestaurantWizardProp
         </div>
     );
 }
+
+// 4:49

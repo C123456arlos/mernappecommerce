@@ -1,12 +1,12 @@
 import { Response } from "express";
 import { AuthRequest } from "../middlewares/auth.js";
-import { Restaurant } from "../models/Restaurant.js";
+import { Restaurant222 } from "../models/Restaurant.js";
 import { User } from "../models/User.js";
 import { Booking } from "../models/Booking.js";
 
 export const getAllRestaurants = async (req: AuthRequest, res: Response): Promise<void> => {
     try {
-        const restaurants = await Restaurant.find({}).populate('owner', 'name, email phone').sort({ createdAt: -1 })
+        const restaurants = await Restaurant222.find({}).populate('owner', 'name, email phone').sort({ createdAt: -1 })
         res.json(restaurants)
     } catch (error: any) {
         console.error(error)
@@ -20,7 +20,7 @@ export const approveRestaurant = async (req: AuthRequest, res: Response): Promis
             res.status(400).json({ message: 'please provide valid approval status' })
             return
         }
-        const restaurant = await Restaurant.findById(req.params.id)
+        const restaurant = await Restaurant222.findById(req.params.id)
         if (!restaurant) {
             res.status(404).json({ message: 'restaurant profile not found' })
             return
@@ -38,7 +38,7 @@ export const getAdminStats = async (req: AuthRequest, res: Response): Promise<vo
         const totalUsers = await User.countDocuments({ role: 'user' })
         const totalOwners = await User.countDocuments({ role: 'owner' })
         const totalBookings = await Booking.countDocuments({})
-        const totalRestaurants = await Restaurant.countDocuments({})
+        const totalRestaurants = await Restaurant222.countDocuments({})
         const latestBookings = await Booking.find({}).populate('user', 'name email').populate('restaurant', 'name').sort({ createdAt: -1 }).limit(10)
         res.json({
             users: {

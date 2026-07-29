@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { Upload, Image } from "lucide-react";
+
+import api from "../../lib/api.ts";
 import { dummyRestaurant } from "../../assets/assets.ts";
 
 interface OwnerProfileDetailsProps {
@@ -23,7 +25,7 @@ export default function OwnerProfileDetails({ restaurant, setRestaurant }: Owner
     const [availableSlots, setAvailableSlots] = useState<string[]>([]);
     const [totalSeats, setTotalSeats] = useState("20");
     const [formLoading, setFormLoading] = useState(false);
-
+    console.log(availableSlots)
     const defaultSlots = [
         "12:00",
         "13:00",
@@ -93,7 +95,15 @@ export default function OwnerProfileDetails({ restaurant, setRestaurant }: Owner
             if (imageFile) {
                 formData.append("image", imageFile);
             }
-            setRestaurant(dummyRestaurant[0]);
+
+            const res = await api.put('/owner/restaurant', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            setRestaurant(res.data)
+            // setRestaurant(dummyRestaurant[0])
+            console.log(res)
             toast.success("Profile details updated successfully!");
         } catch (error: any) {
             toast.error(error?.response?.data?.message || "Update failed");
@@ -250,11 +260,10 @@ export default function OwnerProfileDetails({ restaurant, setRestaurant }: Owner
                                     key={slot}
                                     type="button"
                                     onClick={() => toggleSlot(slot)}
-                                    className={`py-1.5 px-3 text-[10px] border transition-colors cursor-pointer rounded-sm ${
-                                        isSelected
-                                            ? "bg-primary border-primary text-white"
-                                            : "border-outline-variant/40 text-black/55 hover:border-primary"
-                                    }`}
+                                    className={`py-1.5 px-3 text-[10px] border transition-colors cursor-pointer rounded-sm ${isSelected
+                                        ? "bg-primary border-primary text-white"
+                                        : "border-outline-variant/40 text-black/55 hover:border-primary"
+                                        }`}
                                 >
                                     {slot}
                                 </button>
