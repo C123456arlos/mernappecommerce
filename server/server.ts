@@ -21,7 +21,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use(
     cors({
-        origin: ["mernappecommerce-dashboard-ic1rvhtpu-carlos-projects-b4082f29.vercel.app", "mernappecommerce-dashboard-app-eight.vercel.app",
+        origin: ["mernappecommerce-dashboard-ic1rvhtpu-carlos-projects-b4082f29.vercel.app", "mernappecommerce-dashboard-app-eight.vercel.app", 'https://mernappecommerce-server-pzc228i2v-carlos-projects-b4082f29.vercel.app/api/restaurants/featured',
             "http://localhost:5173"
         ],
         credentials: false,
