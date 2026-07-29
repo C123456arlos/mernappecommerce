@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { Upload, Image } from "lucide-react";
 
 import api from "../../lib/api.ts";
-import { dummyRestaurant } from "../../assets/assets.ts";
+
 
 interface OwnerProfileDetailsProps {
     restaurant: any;
