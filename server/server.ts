@@ -42,6 +42,91 @@ app.use((req, res, next) => {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const allowedOrigins = [
+    'https://mernappecommerce-dashboard-ae4v3yhrx-carlos-projects-b4082f29.vercel.app',
+    'http://localhost:3000' // Include for local development
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true // Allow cookies or authorization headers if needed
+}));
+
+
 app.use('/api/auth', authRouter)
 app.use('/api/restaurants', restaurantRouter)
 app.use('/api/bookings', bookingRouter)
